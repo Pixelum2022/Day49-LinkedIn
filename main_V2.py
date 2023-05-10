@@ -1,3 +1,7 @@
+# Ok, fonctionne pour se connecter automatiquement sur LinkedIn,
+# faire une recherche de postes et marquer le premier poste offert
+# comme "Saved".
+
 # import modules :
 from selenium import webdriver
 from selenium.webdriver.common.by import By
@@ -11,7 +15,6 @@ import time
 mon_email = 'harnais_minimal.0@icloud.com'
 mon_mp = '^&JL3wbJMPh8^LkXfovo'
 site_url = 'https://www.linkedin.com/home'
-# site_url = 'https://www.linkedin.com/jobs/search/?currentJobId=3558537636&f_WT=2&geoId=101330853&keywords=python%20developper&location=Montr%C3%A9al%2C%20Qu%C3%A9bec%2C%20Canada&refresh=true'
 chrome_driver_path = "/Applications/chromedriver_mac_arm64/chromedriver"
 
 driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()))
@@ -30,6 +33,17 @@ my_password.send_keys(mon_mp)
 my_button = driver.find_element(By.XPATH, '//*[@id="main-content"]/section[1]/div/div/form[1]/div[2]/button')
 my_button.send_keys(Keys.ENTER)
 
+# Search for python developer jobs:
+search_field = driver.find_element(By.TAG_NAME, 'input')
+search_field.send_keys('python developer Montreal Canada')
+search_field.send_keys(Keys.ENTER)
+
+time.sleep(10)
+
+# Save 1st job:
+search_field = driver.find_element(By.XPATH, '/html/body/div[4]/div[3]/div[2]/div/div[1]/main/div/div/div[1]/div/ul[2]/li/div/div/div[3]/div/button')
+search_field.send_keys(Keys.ENTER)
+
+# wait:
 time.sleep(60)
 driver.quit()
-# Ok, fonctionne pour se connecter automatiquement sur LinkedIn
